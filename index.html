@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title >UPM EXPLORER</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Full height of the viewport */
+            overflow: hidden;
+            position: relative; /* Add this to position sidebar and map correctly */
+        }
+        .sidebar {
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            position: relative;
+            overflow-y: auto; /* Scrollable if content overflows */
+            height: 100vh;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 2em;
+            color: #BC2C0D;
+        }
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px; /* Add margin to space out the form elements */
+        }
+        label {
+            font-size: 1em;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        select, input[type="submit"] {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #6a0dad; /* Purple background for the button */
+            color: white;
+            cursor: pointer;
+            margin-top: 20px; /* Add margin to space out the submit button */
+        }
+        input[type="submit"]:hover {
+            background-color: #520d6e; /* Darker purple for hover */
+        }
+        .results-section {
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+        }
+        h2 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1em;
+            color: #555;
+        }
+        .path {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+            max-height: 50vh; /* Limit height to half of the viewport */
+            overflow-y: auto; /* Add vertical scroll if content overflows */
+        }
+        .path-button {
+            padding: 10px 15px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+            cursor: default;
+        }
+        .route-box {
+            display: inline-block;
+            padding: 8px;
+            margin: 5px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .arrow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 24px;
+            color: #6a0dad; /* Purple color for the arrows */
+        }
+        .map-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Ensure the map is behind the sidebar */
+        }
+        .map-background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+    <script>
+        function displayRouteDetails() {
+            const routeDetails = document.getElementById('route-details');
+            if (routeDetails) {
+                routeDetails.style.display = 'block';
+            }
+        }
+
+        window.onload = function() {
+            displayRouteDetails();
+        };
+    </script>
+</head>
+<body>
+    <div class="map-container">
+        <img src="{{ url_for('static', filename='images/map.jpg') }}" alt="Map" class="map-background">
+    </div>
+    <div class="sidebar">
+        <header>
+            <h1>UPM EXPLORER</h1>
+        </header>
+        <section class="input-section">
+            <form action="/" method="post">
+                <div class="input-group">
+                    <label for="time_slot">Choose a time slot:</label>
+                    <select name="time_slot" id="time_slot">
+                        <option value="9-11" {% if time_slot == "9-11" %}selected{% endif %}>9am-11am</option>
+                        <option value="11-14" {% if time_slot == "11-14" %}selected{% endif %}>11am-14pm</option>
+                        <option value="14-18" {% if time_slot == "14-18" %}selected{% endif %}>14pm-18pm</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="destination">Choose a destination:</label>
+                    <select name="destination" id="destination">
+                        <option value="East Lake" {% if to_destination == "EAST LAKE" %}selected{% endif %}>East Lake</option>
+                        <option value="Astetica" {% if to_destination == "Astetica" %}selected{% endif %}>Astetica</option>
+                        <option value="IOI Resort" {% if to_destination == "IOI Resort" %}selected{% endif %}>IOI Resort</option>
+                        <option value="univ 360" {% if to_destination == "univ 360" %}selected{% endif %}>univ 360</option>
+                        <option value="Tropical Villa" {% if to_destination == "Tropical VilLa" %}selected{% endif %}>Tropical Villa</option>
+                    </select>
+                </div>
+                <input type="submit" value="Find Route">
+            </form>
+        </section>
+        {% if path %}
+            <div id="route-details" class="results-section">
+                <h2>Route Details</h2>
+                <div>Time Slot: {{ time_slot }}</div>
+                <div>From: {{ from_start }}</div>
+                <div>To: {{ to_destination }}</div>
+                <div>Time: {{ time }} minutes</div>
+                <div>Path:</div>
+                <div class="path">
+                    {% for i in range(path|length) %}
+                        <div class="route-box">{{ path[i] }}</div>
+                        {% if not loop.last %}
+                            <div class="arrow">🡻</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
