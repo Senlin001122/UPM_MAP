@@ -1,11 +1,8 @@
 # UPM_MAP
-A advanced UPM map for students to select suitable time to go back home
-
-Our map including all the famous international students' apartments 
-
-And we list all the ways and the main locations at the way back home
-
-It's a nice tool to make UPM students more convenient
+UPM Explorer is a web application developed to assist international students at Universiti Putra Malaysia (UPM) in finding the quickest routes from the Faculty of Computer 
+Science to various apartments around the campus. The application leverages Dijkstra's algorithm to calculate the shortest paths, taking into account real-time traffic 
+conditions during peak hours. With UPM Explorer, students can receive optimal route recommendations, helping them save time and reduce travel stress. The project is 
+implemented using Python and Flask, providing an interactive and user-friendly interface for route planning.
 
 遥遥领先的 UPM 地图供学生选择合适的回家时间
 
