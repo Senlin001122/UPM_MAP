@@ -4,10 +4,4 @@ Science to various apartments around the campus. The application leverages Dijks
 conditions during peak hours. With UPM Explorer, students can receive optimal route recommendations, helping them save time and reduce travel stress. The project is 
 implemented using Python and Flask, providing an interactive and user-friendly interface for route planning.
 
-遥遥领先的 UPM 地图供学生选择合适的回家时间
-
-我们的地图包括所有著名的国际学生公寓 
-
-我们列出了回家路上的所有方式和主要地点
-
-遥遥领先 我们继续领先 遥遥领先于同行
+UPM Explorer 是一款 Web 应用程序，旨在帮助马来西亚博特拉大学 (UPM) 的国际学生找到从计算机科学学院到校园周围各个公寓的最快路线。该应用程序利用 Dijkstra 算法计算最短路径，同时考虑高峰时段的实时交通状况。使用 UPM Explorer，学生可以获得最佳路线建议，帮助他们节省时间并减少旅行压力。该项目使用 Python 和 Flask 实现，为路线规划提供了一个交互式且用户友好的界面。
